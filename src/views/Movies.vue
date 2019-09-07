@@ -1,6 +1,6 @@
 <template>
   <div class="Movies">
-    <h1>Movies</h1>
+    <h1>Search</h1>
     <input
       @keypress="e => getDataFromAPI(e)"
       v-model="searchText"

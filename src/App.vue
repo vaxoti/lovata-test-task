@@ -23,6 +23,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  background: #fff;
   box-shadow: 0 0 5px rgba(50, 50, 50, 0.3);
   padding: 0 20px;
   display: flex;
