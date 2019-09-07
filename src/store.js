@@ -6,17 +6,38 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        movies: []
+        currentSearch: {
+            movies: [],
+            totalPages: 0,
+            currentPage: 1,
+            searchText: ''
+        }
     },
     mutations: {
-        setMoviesToStore(state, data) {
-            state.movies = data;
+        setCurrentSearch(state, { Search, totalResults, searchText, page }) {
+            state.currentSearch = {
+                ...state.currentSearch,
+                movies: Search,
+                totalPages: Number(totalResults),
+                searchText,
+                currentPage: page
+            };
+        },
+        changeCurrentPage(state, currentPage) {
+            state.currentSearch = { ...state.currentSearch, currentPage };
         }
     },
     actions: {
-        async callMovies({ commit }, searchText) {
-            const data = await getMoviesFromAPI(searchText);
-            data.Response === 'True' ? commit('setMoviesToStore', data.Search) : commit('setMoviesToStore', []);
+        async callMovies({ commit }, { searchText, page }) {
+            const data = await getMoviesFromAPI(searchText, page);
+            const defaultData = {
+                Search: [],
+                totalResults: 0,
+                searchText: ''
+            };
+            data.Response === 'True'
+                ? commit('setCurrentSearch', { ...data, searchText, page })
+                : commit('setCurrentSearch', defaultData);
         }
     }
 });

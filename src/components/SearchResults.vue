@@ -46,13 +46,17 @@ export default {
   display: flex;
   box-sizing: border-box;
   margin: -1px -1px 0 0;
-  width: 300px;
+  width: 240px;
+  height: 400px;
   transition: 0.3s;
 }
 .SearchResults-item-image {
+  width: 100%;
   box-sizing: border-box;
 }
 .SearchResults-item-image img {
+  object-fit: cover;
+  object-position: center center;
   height: 100%;
   width: 100%;
 }

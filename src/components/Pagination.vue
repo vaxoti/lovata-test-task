@@ -43,6 +43,7 @@ export default {
 
 <style scoped>
 .Pagination {
+  margin: 20px 10px;
   color: #333;
   display: flex;
   justify-content: center;

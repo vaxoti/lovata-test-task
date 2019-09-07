@@ -8,8 +8,18 @@
       type="text"
       placeholder="Input movie name here"
     />
-    <SearchResults :data="$store.state.movies" />
-    <Pagination :totalPages="422" :currentPage="currentPage" :changePage="changePage" />
+    <div class="Movies-search-results-container">
+      <div v-if="isLoading" class="Movies-search-results-spinner">
+        <img src="@/assets/spinner.svg" alt />
+      </div>
+      <SearchResults :data="$store.state.currentSearch.movies" />
+      <Pagination
+        v-if="$store.state.currentSearch.movies.length !== 0"
+        :totalPages="$store.state.currentSearch.totalPages"
+        :currentPage="$store.state.currentSearch.currentPage"
+        :changePage="changePage"
+      />
+    </div>
   </div>
 </template>
 
@@ -22,7 +32,7 @@ export default {
   data: function() {
     return {
       searchText: "",
-      currentPage: 2
+      isLoading: true
     };
   },
   components: {
@@ -30,14 +40,29 @@ export default {
     Pagination
   },
   methods: {
+    dispatchCallMovies: function(data) {
+      this.isLoading = true;
+      this.$store
+        .dispatch("callMovies", data)
+        .then(() => (this.isLoading = false));
+    },
     getDataFromAPI: function(e) {
       if (e.keyCode === 13) {
         const { searchText } = this;
-        this.$store.dispatch("callMovies", searchText);
+        const data = {
+          searchText,
+          page: 1
+        };
+        this.dispatchCallMovies(data);
       }
     },
     changePage: function(page) {
-      this.currentPage = page;
+      const data = {
+        searchText: this.$store.state.currentSearch.searchText,
+        page
+      };
+      this.$store.commit("changeCurrentPage", page);
+      this.dispatchCallMovies(data);
     }
   }
 };
@@ -68,5 +93,20 @@ export default {
 .Movies-search:focus {
   border-color: #ccc;
   box-shadow: 0 0 15px rgba(150, 150, 150, 0.3);
+}
+.Movies-search-results-container {
+  position: relative;
+}
+.Movies-search-results-spinner {
+  z-index: 500;
+  background: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
