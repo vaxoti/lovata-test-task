@@ -8,7 +8,7 @@
       type="text"
       placeholder="Input movie name here"
     />
-    <SearchResults />
+    <SearchResults :data="$store.state.movies" />
   </div>
 </template>
 
@@ -17,16 +17,19 @@ import SearchResults from "@/components/SearchResults.vue";
 
 export default {
   name: "Movies",
-  data: () => ({
-    searchText: ""
-  }),
+  data: function() {
+    return {
+      searchText: ""
+    };
+  },
   components: {
     SearchResults
   },
   methods: {
     getDataFromAPI: function(e) {
       if (e.keyCode === 13) {
-        console.log(this.searchText);
+        const { searchText } = this;
+        this.$store.dispatch("callMovies", searchText);
       }
     }
   }
