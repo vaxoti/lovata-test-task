@@ -19,6 +19,7 @@ body {
   padding-top: 60px;
 }
 .Navbar {
+  z-index: 1000;
   width: 100%;
   position: fixed;
   top: 0;

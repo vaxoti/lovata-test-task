@@ -20,8 +20,7 @@
 export default {
   name: "SearchResults",
   props: {
-    data: Array,
-    default: []
+    data: Array
   }
 };
 </script>

@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        movies: [1, 2]
+        movies: []
     },
     mutations: {
         setMoviesToStore(state, data) {

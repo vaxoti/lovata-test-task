@@ -9,21 +9,25 @@
       placeholder="Input movie name here"
     />
     <SearchResults :data="$store.state.movies" />
+    <Pagination :totalPages="422" :currentPage="currentPage" :changePage="changePage" />
   </div>
 </template>
 
 <script>
 import SearchResults from "@/components/SearchResults.vue";
+import Pagination from "@/components/Pagination.vue";
 
 export default {
   name: "Movies",
   data: function() {
     return {
-      searchText: ""
+      searchText: "",
+      currentPage: 2
     };
   },
   components: {
-    SearchResults
+    SearchResults,
+    Pagination
   },
   methods: {
     getDataFromAPI: function(e) {
@@ -31,6 +35,9 @@ export default {
         const { searchText } = this;
         this.$store.dispatch("callMovies", searchText);
       }
+    },
+    changePage: function(page) {
+      this.currentPage = page;
     }
   }
 };
