@@ -32,19 +32,37 @@ export default {
   data: function() {
     return {
       searchText: "",
-      isLoading: true
+      isLoading: false
     };
   },
   components: {
     SearchResults,
     Pagination
   },
+  mounted: function() {
+    const { query } = this.$route;
+    if (query.s && query.page) {
+      const data = {
+        searchText: query.s,
+        page: Number(query.page)
+      };
+      this.searchText = query.s;
+      this.dispatchCallMovies(data);
+    }
+  },
   methods: {
     dispatchCallMovies: function(data) {
       this.isLoading = true;
+      this.changeQuery(data);
       this.$store
         .dispatch("callMovies", data)
         .then(() => (this.isLoading = false));
+    },
+    changeQuery: function(data) {
+      const path = `/movies?s=${data.searchText}&page=${data.page}`;
+      if (path !== this.$route.fullPath) {
+        this.$router.replace(`${path}`);
+      }
     },
     getDataFromAPI: function(e) {
       if (e.keyCode === 13) {
