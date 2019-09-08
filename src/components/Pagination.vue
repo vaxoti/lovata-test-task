@@ -64,9 +64,11 @@ export default {
   user-select: none;
 }
 .Pagination > div:hover {
-  background: #b7beff;
+  background: #5863c7;
+  color: #fff;
 }
 .Pagination > div.active {
-  background: #b7beff;
+  background: #5863c7;
+  color: #fff;
 }
 </style>

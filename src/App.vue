@@ -42,8 +42,8 @@ body {
 }
 .Navbar-link:hover,
 .Navbar-link.router-link-active {
-  background: #b7beff;
-  color: #333;
+  background: #5863c7;
+  color: #fff;
 }
 .Navbar-body {
   max-width: 1200px;

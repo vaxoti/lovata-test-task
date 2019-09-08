@@ -12,6 +12,7 @@ export default new Vuex.Store({
             currentPage: 1,
             searchText: ''
         },
+        previosSearches: {},
         allMovies: {}
     },
     mutations: {
@@ -29,19 +30,31 @@ export default new Vuex.Store({
         },
         addMovieToStore(state, { movie, id }) {
             state.allMovies[id] = movie;
+        },
+        addToPreviosSearches(state, { Search, totalResults, searchText, page, searchName }) {
+            const data = {
+                Search,
+                totalResults: Number(totalResults),
+                searchText,
+                page
+            };
+            state.previosSearches[searchName] = data;
         }
     },
     actions: {
-        async callMovies({ commit }, { searchText, page }) {
+        async callMovies({ commit }, { searchText, page, searchName }) {
             const data = await getMoviesFromAPI(searchText, page);
             const defaultData = {
                 Search: [],
                 totalResults: 0,
                 searchText: ''
             };
-            data.Response === 'True'
-                ? commit('setCurrentSearch', { ...data, searchText, page })
-                : commit('setCurrentSearch', defaultData);
+            if (data.Response === 'True') {
+                commit('setCurrentSearch', { ...data, searchText, page });
+                commit('addToPreviosSearches', { ...data, searchText, page, searchName });
+            } else {
+                commit('setCurrentSearch', defaultData);
+            }
         },
         async callMovie({ commit }, id) {
             const movie = await getMovieFromAPI(id);

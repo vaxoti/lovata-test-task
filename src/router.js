@@ -19,7 +19,7 @@ export default new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/AboutMovie.vue')
         },
         {
-            path: 'previous-searches',
+            path: '/previous-searches',
             name: 'previousSearches',
             component: () => import(/* webpackChunkName: "about" */ './views/PreviousSearches.vue')
         }

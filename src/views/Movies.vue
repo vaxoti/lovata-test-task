@@ -2,7 +2,8 @@
   <div class="Movies">
     <h1>Search</h1>
     <input
-      @keypress="e => getDataFromAPI(e)"
+      @keypress="e => getData(e)"
+      e
       v-model="searchText"
       class="Movies-search"
       type="text"
@@ -52,19 +53,36 @@ export default {
   },
   methods: {
     dispatchCallMovies: function(data) {
+      const { searchText, page } = data;
+      const searchName = `s_${searchText.replace(" ", "_")}_p_${page}`;
+      const previosSearch = this.$store.state.previosSearches[searchName];
       this.isLoading = true;
       this.changeQuery(data);
-      this.$store
-        .dispatch("callMovies", data)
-        .then(() => (this.isLoading = false));
+      if (previosSearch) {
+        const { Search, totalResults, searchText, page } = previosSearch;
+        const setCurrentData = {
+          Search,
+          totalResults,
+          searchText,
+          page
+        };
+        this.$store.commit("setCurrentSearch", setCurrentData);
+        this.isLoading = false;
+      } else {
+        this.$store
+          .dispatch("callMovies", { ...data, searchName })
+          .then(() => (this.isLoading = false));
+      }
     },
     changeQuery: function(data) {
-      const path = `/movies?s=${data.searchText}&page=${data.page}`;
+      const path = `/movies?s=${data.searchText.replace(" ", "%20")}&page=${
+        data.page
+      }`;
       if (path !== this.$route.fullPath) {
         this.$router.replace(`${path}`);
       }
     },
-    getDataFromAPI: function(e) {
+    getData: function(e) {
       if (e.keyCode === 13) {
         const { searchText } = this;
         const data = {

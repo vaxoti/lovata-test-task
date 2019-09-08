@@ -103,7 +103,7 @@ export default {
   font-weight: bold;
 }
 .AboutMovie-conteiner {
-  background: #444;
+  background: #5863c7;
   color: #fff;
   display: flex;
 }
@@ -124,7 +124,7 @@ export default {
   box-sizing: border-box;
 }
 .AboutMovie-plot {
-  background-color: #444;
+  background-color: #5863c7;
   color: #fff;
   padding: 20px;
   font-size: 20px;
