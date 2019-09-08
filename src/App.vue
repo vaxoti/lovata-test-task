@@ -19,10 +19,12 @@ body {
   padding-top: 60px;
 }
 .Navbar {
+  z-index: 1000;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
+  background: #fff;
   box-shadow: 0 0 5px rgba(50, 50, 50, 0.3);
   padding: 0 20px;
   display: flex;
@@ -40,8 +42,8 @@ body {
 }
 .Navbar-link:hover,
 .Navbar-link.router-link-active {
-  background: #b7beff;
-  color: #333;
+  background: #5863c7;
+  color: #fff;
 }
 .Navbar-body {
   max-width: 1200px;
