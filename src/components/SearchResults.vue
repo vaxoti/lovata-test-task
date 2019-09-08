@@ -2,15 +2,18 @@
   <div class="SearchResults">
     <h1>SearchResults</h1>
     <div v-if="data.length === 0">Nothing found.</div>
+
     <div class="SearchResults-container">
-      <div class="SearchResults-item" v-for="item in data" :key="item.imdbID">
-        <div class="SearchResults-item-image">
-          <img :src="item.Poster" alt />
-        </div>
-        <div class="SearchResults-item-description" :class="{ active: item.Poster=== 'N/A'}">
-          <h2>{{item.Title}} {{item.Type}}</h2>
-          <h3>{{item.Year}}</h3>
-        </div>
+      <div v-for="item in data" :key="item.imdbID">
+        <router-link class="SearchResults-item" :to="`/movies/${item.imdbID}`">
+          <div class="SearchResults-item-image">
+            <img :src="item.Poster" alt />
+          </div>
+          <div class="SearchResults-item-description" :class="{ active: item.Poster=== 'N/A'}">
+            <h2>{{item.Title}} {{item.Type}}</h2>
+            <h3>{{item.Year}}</h3>
+          </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -41,6 +44,7 @@ export default {
   justify-content: center;
 }
 .SearchResults-item {
+  color: #333;
   position: relative;
   cursor: pointer;
   display: flex;

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { getMoviesFromAPI } from '@/apiCalls/movies';
+import { getMoviesFromAPI, getMovieFromAPI } from '@/apiCalls/movies';
 
 Vue.use(Vuex);
 
@@ -11,7 +11,8 @@ export default new Vuex.Store({
             totalPages: 0,
             currentPage: 1,
             searchText: ''
-        }
+        },
+        allMovies: {}
     },
     mutations: {
         setCurrentSearch(state, { Search, totalResults, searchText, page }) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         },
         changeCurrentPage(state, currentPage) {
             state.currentSearch = { ...state.currentSearch, currentPage };
+        },
+        addMovieToStore(state, { movie, id }) {
+            state.allMovies[id] = movie;
         }
     },
     actions: {
@@ -38,6 +42,11 @@ export default new Vuex.Store({
             data.Response === 'True'
                 ? commit('setCurrentSearch', { ...data, searchText, page })
                 : commit('setCurrentSearch', defaultData);
+        },
+        async callMovie({ commit }, id) {
+            const movie = await getMovieFromAPI(id);
+            const data = { movie, id };
+            movie.Response === 'True' ? commit('addMovieToStore', data) : null;
         }
     }
 });
