@@ -3,7 +3,6 @@
     <h1>Search</h1>
     <input
       @keypress="e => getData(e)"
-      e
       v-model="searchText"
       class="Movies-search"
       type="text"
@@ -32,7 +31,7 @@ export default {
   name: "Movies",
   data: function() {
     return {
-      searchText: "",
+      searchText: "" || this.$store.state.currentSearch.searchText,
       isLoading: false
     };
   },

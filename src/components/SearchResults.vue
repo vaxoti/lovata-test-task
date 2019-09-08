@@ -1,6 +1,6 @@
 <template>
   <div class="SearchResults">
-    <h1>SearchResults</h1>
+    <h1>Search Results</h1>
     <div v-if="data.length === 0">Nothing found.</div>
 
     <div class="SearchResults-container">
@@ -65,7 +65,8 @@ export default {
   width: 100%;
 }
 .SearchResults-item-description {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(88, 99, 199, 0.7);
+  color: #fff;
   width: 100%;
   height: 100%;
   display: flex;
